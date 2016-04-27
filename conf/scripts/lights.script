@@ -1,0 +1,27 @@
+//alle lichten aan
+	
+if(Config_Light.state == ON){	
+	var Number percent = 0
+       percent = Light_Master.state as Number
+	if(percent >= 100){
+		percent = 100
+	}
+	
+	if(My_Status.state == 4 && percent > 0){
+		sendCommand(Light_Kamer, percent)
+		sendCommand(Light_Eetkamer, percent)
+		sendCommand(Light_Read, ON)
+		if(Network_Desktop.state == ON){
+			sendCommand(Light_Computer, ON)
+		}
+		else{
+			sendCommand(Light_Computer, OFF)
+		}
+	}
+	else{
+		sendCommand(Light_Kamer, 0)
+		sendCommand(Light_Eetkamer, 0)
+		sendCommand(Light_Read, OFF)
+		sendCommand(Light_Computer, OFF)
+	}
+}

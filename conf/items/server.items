@@ -1,0 +1,19 @@
+Group GRP_SERVER
+
+
+Number Server_CPUCombined  	"CPU totaal [%.1f%%]"   			<pie> 			(SERVER) { systeminfo="CpuCombined:10000" }
+Number Server_CPUUSer  		"CPU gebruiker [%.1f%%]"   			<pie> 			(SERVER) { systeminfo="CpuUser:10000" }
+Number Server_CPUSystem    	"CPU systeem [%.1f%%]" 				<pie> 			(SERVER) { systeminfo="CpuSystem:10000" }
+
+Number Server_RamUsed    	"Geheugen gebruikt [%.1f MB]"    	<pie> 		(SERVER) { systeminfo="MemActualUsed:10000" }
+Number Server_RamFree    	"Geheugen vrij [%.1f MB]"    		<pie> 		(SERVER) { systeminfo="MemActualFree:10000" }
+Number Server_RamTotal 		"Geheugen totaal [%.1f MB]"  		<pie> 		(SERVER) { systeminfo="MemTotal:10000" }
+Number Server_SwapUsed 		"Wisselg. gebruikt [%.1f MB]"  		<pie> 			(SERVER) { systeminfo="SwapUsed:10000" }
+
+Number Server_TxBytes   	"Netwerk totaal [%.1f MB]"  		<network>		(SERVER) { systeminfo="NetTxBytes:10000:eth0" }
+Number Server_RxBytes   	"Netwerk totaal [%.1f MB]"  		<network>		(SERVER) { systeminfo="NetRxBytes:10000:eth0" }
+Number Server_Tx			"Netwerk upload [%.3f MB/s]"  		<network>		(SERVER)
+Number Server_Rx			"Netwerk download [%.3f MB/s]"  	<network>		(SERVER)
+	
+String 	Server_CPUCombined_Str  "CPU totaal [%s]" 				<pie>
+String	Server_RamUsed_Str    	"Geheugen gebruikt [%s]"  			<pie>

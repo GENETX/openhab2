@@ -1,0 +1,15 @@
+if(Config_Standby.state == ON){	
+	if(My_Status.state == 4){
+		sendCommand(Power_Desktop, ON)
+		createTimer(now.plusMillis(200)) [ |sendCommand(Power_Receiver, ON)]
+	}
+	else{
+		executeCommandLine("python ../extern/kodi/kodiStop.py")
+		if(Network_Desktop.state == OFF){ 
+			sendCommand(Power_Desktop, OFF)
+		}
+		sendCommand(AV_Power, OFF)
+		createTimer(now.plusMillis(200)) [ |sendCommand(Media_Subwoofer, OFF)]
+		createTimer(now.plusMillis(10000)) [ |sendCommand(Power_Receiver, OFF)]
+	}
+}

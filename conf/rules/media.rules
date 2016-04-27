@@ -1,0 +1,85 @@
+var Number kodiWasPlaying = 0
+
+
+
+
+/*** Multimedia ***/
+rule "Media Kodi starts playing"
+when
+	Item Kodi_Status changed from Stop to Play
+then
+	if(Config_Media.state == ON){
+		sendCommand(AV_Source, 15)
+		if(AV_Power.state == OFF){
+			sendCommand(AV_Power, ON)
+			if(Kodi_Type.state == 'movie'){
+				createTimer(now.plusMillis(6000)) [ |sendCommand(AV_Volume, 54) ]
+			}
+			else{
+				createTimer(now.plusMillis(6000)) [ |sendCommand(AV_Volume, 38) ]
+			}
+		}
+	}
+end
+
+/*** Telefoon ***/
+rule "Media Start call"
+when
+	Item Phone_State changed to calling
+then
+	if(Config_Media.state == ON){
+		//pause kodi
+		if(AV_Power.state == ON){
+			sendCommand(AV_Mute, ON)
+		}
+		if(Kodi_Status.state == 'Play'){
+			kodiWasPlaying = 1
+			sendCommand(Kodi_Status, 'Pause')
+			executeCommandLine("python ../extern/kodi/kodiPlayPause.py")
+		}
+	}
+end
+
+rule "Media End call"
+when
+	Item Phone_State changed from calling to idle
+then
+	if(Config_Media.state == ON){
+		//set Kodi to play again if paused
+		if(AV_Power.state == ON){
+			sendCommand(AV_Mute, OFF)
+		}
+		if(Kodi_Status.state == 'Pause' && kodiWasPlaying == 1){
+			kodiWasPlaying = 0
+			sendCommand(Kodi_Status, 'Play')
+			executeCommandLine("python ../extern/kodi/kodiPlayPause.py")
+		}
+	} 
+end
+
+
+
+
+
+
+
+
+//Chime
+rule "Media Deurbel"
+when
+	Item Doorbell received update
+then
+	if(Config_Media.state == ON){
+		//pause kodi
+		if(AV_Power.state == ON){
+			sendCommand(AV_Mute, ON)
+		}
+		if(Kodi_Status.state == 'Play'){
+			kodiWasPlaying = 1
+			sendCommand(Kodi_Status, 'Pause')
+			executeCommandLine("python ../extern/kodi/kodiPlayPause.py")
+		}
+	}
+	sendBroadcastNotification("Er is iemand bij de deur.")
+end 
+ 

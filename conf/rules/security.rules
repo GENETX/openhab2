@@ -1,0 +1,36 @@
+//Rookalarm
+rule "security rookalarm update"
+when
+	Item SmokeDetector received update
+then
+	if(SmokeDetector.state == "PANIC"){
+		sendBroadcastNotification("PANIEK! ROOKALARM!!!")
+		
+		//a good reason to update this by changing my state to active and turning on all lights, no matter what
+		sendCommand(My_Status, 4)
+		sendCommand(Light_Kamer, 100)
+		sendCommand(Light_Eetkamer, 100)
+		sendCommand(Light_Read, ON)
+		sendCommand(Light_Computer, ON)
+		sendCommand(Light_Hal, 100)
+		sendCommand(Light_Slaapkamer, 100)
+	}
+	else{
+		sendBroadcastNotification("Het rookalarm geeft een melding.")
+	}
+end
+
+rule "security TV stolen"
+when
+	Item Network_TV changed
+then
+	if(Security_Alarm.state == ON && Network_TV.state == OFF){
+		sendBroadcastNotification("ALARM! Mogelijk inbreker, TV ping faalt.")
+		//sendCommand(Light_Kamer, 100)
+		//sendCommand(Light_Kamer_Colour, new HSBType(new DecimalType(0),new PercentType(100),new PercentType(100)))
+		//sendCommand(Light_Eetkamer, 100)
+		//sendCommand(Light_Eetkamer_Colour, new HSBType(new DecimalType(0),new PercentType(100),new PercentType(100)))
+		//sendCommand(Light_Kamer, 100)
+		//sendCommand(Light_Eetkamer, 100)
+	}
+end

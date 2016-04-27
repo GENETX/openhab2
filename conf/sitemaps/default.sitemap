@@ -1,0 +1,213 @@
+sitemap default label="Huis"
+{	
+	Frame label="Scenes" icon="sofa" {	
+		Selection item=My_Status mappings=[1="Weg", 2="Afwezig", 3="Slapen", 4="Thuis"]
+		Selection item=My_Scene mappings=[1="Computeren", 2="TV", 3="Film", 4="Overig"]
+		Slider item=Light_Master
+		Selection item=My_Today mappings=[1="Werk", 2="Vrij", 3="Manual"]
+		Setpoint item=CV_Setpoint minValue=14.0 maxValue=22 step=0.5
+		//Switch item=Doorbell
+		//Switch item=Presence_Gerwin 
+		//String item=Presence_Gerwin2
+		
+		Text label="Meer" icon="settings" {
+			Frame label="Algemeen" {
+				Selection item=My_Tomorrow mappings=[1="Werk", 2="Vrij", 3="Manual"]
+			}
+			
+			Frame label="Wekker" {
+				Setpoint item=My_Alarm_Hour minValue=0 maxValue=23 step=1.0
+				Setpoint item=My_Alarm_Minute minValue=0 maxValue=59 step=1.0
+				Switch item=My_Alarm_Enabled
+			}
+			
+			Frame label="Schema" { 	
+					Selection item=My_PlanMon mappings=[1="Werk", 2="Vrij", 3="Manual"]
+					Selection item=My_PlanTue mappings=[1="Werk", 2="Vrij", 3="Manual"]
+					Selection item=My_PlanWed mappings=[1="Werk", 2="Vrij", 3="Manual"]
+					Selection item=My_PlanThu mappings=[1="Werk", 2="Vrij", 3="Manual"]
+					Selection item=My_PlanFri mappings=[1="Werk", 2="Vrij", 3="Manual"]
+					Selection item=My_PlanSat mappings=[1="Werk", 2="Vrij", 3="Manual"]
+					Selection item=My_PlanSun mappings=[1="Werk", 2="Vrij", 3="Manual"]				
+			}
+		}
+	}
+	
+	Frame label="Media en Apparatuur" {
+		Switch item=AV_Power
+		Switch item=Media_Subwoofer
+		Slider item=AV_Volume
+		Text label="Meer" icon="settings" {
+			Frame label="Apparatuur" {
+				Switch item=Power_Desktop
+				Switch item=Power_Receiver
+				Switch item=Media_Subwoofer
+			}
+			Frame label="Media" {
+				Switch item=AV_Power
+				Slider item=AV_Volume
+				Selection label="AVR Source" item=AV_Source mappings=[15=HTPC, 38=RADIO] 
+				Switch item=AV_Mute
+				Text item=Kodi_Status
+				Text item=Kodi_Type
+				Text item=Kodi_Title
+				Text item=Kodi_Artist
+			}
+		}
+	}
+	
+	Frame label="Klimaat en Weer" {
+		Text item=Inside_Temperature_Str
+		Text item=Inside_Humidity_Str
+		
+		Text item=Weather_Temperature_Str
+		Text item=Weather_Humidity_Str
+		
+		Setpoint item=CV_Setpoint minValue=14.0 maxValue=22 step=0.5
+		
+		Text label="Meer" icon="settings" {
+			Frame label="Thermostaat" {
+				Setpoint item=CV_Setpoint minValue=14.0 maxValue=22 step=0.5
+				Text item=Inside_Temperature_Str
+				Text item=Inside_Humidity_Str
+				Text item=CV_Temperature_Str
+				Text label="Grafieken" icon="chart" {
+					Webview url="http://192.168.1.11:3000/render/dashboard-solo/db/openhab?panelId=1&fullscreen&from=now-1d&to=now&width=1000&height=380&theme=light" height=11 
+					Webview url="http://192.168.1.11:3000/render/dashboard-solo/db/openhab?panelId=7&fullscreen&from=now-1d&to=now&width=1000&height=380&theme=light" height=11 
+				}
+			}
+			
+			Frame label="Schema" {
+				Setpoint item=CV_TempHome minValue=14.0 maxValue=22 step=0.5
+				Setpoint item=CV_TempMorning minValue=14.0 maxValue=22 step=0.5
+				Setpoint item=CV_TempEvening minValue=14.0 maxValue=22 step=0.5
+				Setpoint item=CV_TempAway minValue=14.0 maxValue=22 step=0.5
+			}
+			
+			Frame label="SmartStart" icon="clock-on" { 	
+				Switch item=CV_SStart_Enabled
+				Setpoint item=CV_SStart_Setpoint minValue=14 maxValue=22 step=0.5
+				Setpoint item=CV_SStart_Hour minValue=0 maxValue=23 step=1
+				Setpoint item=CV_SStart_Min minValue=0 maxValue=55 step=10
+				Setpoint item=CV_SStart_Dev minValue=0 maxValue=2 step=0.5
+			}
+			
+			Frame label="Weer" {
+				//Text item=Weather_StreetTemperature_Str
+				//Text item=Weather_StreetHumidity_Str
+				Text item=Weather_Temperature_Str
+				Text item=Weather_Wind_Speed_Str 
+				Text item=Weather_Wind_Direction
+				Text item=Weather_Humidity_Str
+				Text item=Weather_Pressure_Str 
+				Text item=Weather_Clouds_Str
+				Text item=Sunrise_Time_Str
+				Text item=Sunset_Time_Str
+				Text item=Azimuth 
+				Text item=Elevation
+
+				
+				Text label="Grafieken" icon="chart" { 
+					Frame {					
+						Webview url="http://192.168.1.11:3000/render/dashboard-solo/db/openhab?panelId=4&fullscreen&from=now-1d&to=now&width=1000&height=380&theme=light" height=11 
+						Webview url="http://192.168.1.11:3000/render/dashboard-solo/db/openhab?panelId=3&fullscreen&from=now-1d&to=now&&width=1000&height=380&theme=light" height=11 
+						Webview url="http://192.168.1.11:3000/render/dashboard-solo/db/openhab?panelId=6&fullscreen&from=now-1d&to=now&&width=1000&height=380&theme=light" height=11 
+						Webview url="http://192.168.1.11:3000/render/dashboard-solo/db/openhab?panelId=5&fullscreen&from=now-1d&to=now&&width=1000&height=380&theme=light" height=11 
+						Webview url="http://192.168.1.11:3000/render/dashboard-solo/db/openhab?panelId=7&fullscreen&from=now-1d&to=now&&width=1000&height=380&theme=light" height=11 
+					}
+				}
+			}
+		}
+	}
+	
+	Frame label="Verlichting" {
+		Slider item=Light_Master
+		Slider item=Light_Kamer
+		Switch item=Light_Read
+		Slider item=Light_Eetkamer
+		Switch item=Light_Computer
+
+		Text label="Meer" icon="settings" {
+			Frame label="Lampen" {
+				Slider item=Light_Kamer
+				Switch item=Light_Read
+				Slider item=Light_Eetkamer
+				Switch item=Light_Computer
+				Slider item=Light_Hal
+				Slider item=Light_Slaapkamer
+			}
+			
+			Frame label="Sfeer" {
+				Switch item=Light_Kamer_White mappings=[ON=RESET]
+				Colorpicker item=Light_Kamer_Colour
+				Switch item=Light_Eetkamer_White mappings=[ON=RESET]
+				Colorpicker item=Light_Eetkamer_Colour
+				Slider item=Light_Hal_White
+				Slider item=Light_Slaapkamer_White
+			}
+		}
+	}
+	
+	Frame label="Beveiliging en Monitoring" {
+		Switch item=Security_Alarm
+		
+		Text label="Meterstanden" icon="energy" {
+			Frame label="Meterstanden" {
+				Text item=Meter_ELLaag
+				Text item=Meter_ELHoog
+				Text item=Meter_GasTotaal
+				Text item=Meter_Water
+				
+				Text label="Grafieken" icon="chart" {
+					Webview url="http://192.168.1.11:3000/render/dashboard-solo/db/openhab?panelId=8&fullscreen&from=now-1M&to=now&width=1000&height=380&theme=light" height=11             
+					Webview url="http://192.168.1.11:3000/render/dashboard-solo/db/openhab?panelId=9&fullscreen&from=now-1M&to=now&width=1000&height=380&theme=light" height=11
+					Webview url="http://192.168.1.11:3000/render/dashboard-solo/db/openhab?panelId=10&fullscreen&from=now-1M&to=now&width=1000&height=380&theme=light" height=11
+				}
+			}
+			
+			Frame label="Invoeren" {
+				Setpoint item=Meter_ELLaag minValue=2799.0 maxValue=100000.0 step=1.0
+				Setpoint item=Meter_ELHoog minValue=3300.0 maxValue=100000.0 step=1.0
+				Setpoint item=Meter_Gas minValue=2490.0 maxValue=100000.0 step=1.0
+				Setpoint item=Meter_GasDecimal minValue=0.0 maxValue=.9 step=0.1
+				Setpoint item=Meter_Water minValue=148.0 maxValue=100000.0 step=0.1
+						
+				Switch item=Meter_Submit icon="none"
+			}
+		}
+		
+		Text item=Security_SmokeDetector
+		
+		Text label="Meer" icon="settings" {
+			Frame label="Beveiliging" {
+				Switch item=Security_Alarm
+				Text item=Security_SmokeDetector
+			}
+			
+			Frame label="Apparatuur" {
+				Text item=Network_Desktop
+				Text item=Network_Smartphone
+				Text item=Network_Tablet
+				Text item=Network_TV
+			}
+			
+			Frame label="Server" {
+				Text item=Server_CPUCombined_Str
+				Text item=Server_RamUsed_Str
+			}
+		}		
+	}
+	
+		
+	Frame label="Instellingen" icon="settings"{
+		Switch item=Config_All
+		Text label="Meer" icon="settings" {
+			Switch 	item=Config_All 
+			Switch 	item=Config_Light
+			Switch 	item=Config_Standby 
+			Switch 	item=Config_Thermostat
+			Switch 	item=Config_Media
+			Switch 	item=Config_Other
+		}
+	}
+}

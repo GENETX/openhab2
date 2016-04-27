@@ -1,0 +1,33 @@
+//alle lichten aan
+	
+if(Config_Light.state == ON){	
+	if(My_Status.state == 4 && Light_Master.state > 0){
+		sendCommand(Light_Kamer, Light_Master.state)
+		sendCommand(Light_Eetkamer, Light_Master.state)
+		/*if(Light_Read.state == OFF){
+			sendCommand(Light_Read, ON)
+		}
+		
+		if(Network_Desktop.state == ON){
+			if(Light_Computer.state == OFF){
+				sendCommand(Light_Computer, ON)
+			}
+		}
+		else{
+			if(Light_Computer.state == ON){
+				sendCommand(Light_Computer, OFF)
+			}
+		}*/
+	}
+	else{
+		sendCommand(Light_Kamer, 0)
+		sendCommand(Light_Eetkamer, 0)
+		if(Light_Read.state == ON){
+			sendCommand(Light_Read, OFF)
+		}
+		if(Light_Computer.state == ON){
+			sendCommand(Light_Computer, OFF)
+		}
+		
+	}
+}

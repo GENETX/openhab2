@@ -1,0 +1,19 @@
+rule "Config all"
+when
+	Item Config_All changed
+then
+	if(Config_All.state == ON){
+		sendCommand(Config_Light, ON) 
+		sendCommand(Config_Standby, ON)
+		sendCommand(Config_Thermostat, ON)
+		sendCommand(Config_Media, ON)
+		sendCommand(Config_Other, ON)
+	}
+	else{
+		sendCommand(Config_Light, OFF) 
+		sendCommand(Config_Standby, OFF)
+		sendCommand(Config_Thermostat, OFF)
+		sendCommand(Config_Media, OFF)
+		sendCommand(Config_Other, OFF)
+	}
+end

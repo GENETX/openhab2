@@ -1,0 +1,71 @@
+var Number dender = 0
+
+/* REMOTE */
+rule "Remote Light-remote-aan"
+when
+	Item Remote_Light received update
+then
+	if(dender == 0){
+		dender = 1
+		if(Remote_Light.state == ON){
+			sendCommand(Light_Master, 80)
+		}
+		else{
+			sendCommand(Light_Master, 0)
+		}
+		createTimer(now.plusMillis(200)) [ |dender = 0 ]
+	}
+end
+
+rule "Remote Volume"
+when
+	Item Remote_Vol received update
+then 
+	if(dender == 0){
+		dender = 1
+		if(Remote_Vol.state == ON){
+			sendCommand(AV_Volume, DECREASE);
+		}
+		else{
+			sendCommand(AV_Volume, INCREASE);
+		}
+		dender = 1
+		createTimer(now.plusMillis(200)) [ |dender = 0 ]
+	}
+end
+
+rule "Remote Kodi-remote-play"
+when
+	Item Remote_Kodi received update
+then
+	if(dender == 0){
+		dender = 1
+		if(Remote_Kodi.state == OFF){
+			executeCommandLine("python ../extern/kodi/kodiPlayPause.py")
+		}
+		else{
+			sendCommand(Kodi_Status, 'Stop')
+			executeCommandLine("python ../extern/kodi/kodiStop.py")
+		}
+		dender = 1
+		createTimer(now.plusMillis(200)) [ |dender = 0 ]
+	}
+end
+
+rule "Remote Kodi-remote-next"
+when
+	Item Remote_KodiNext received update
+then
+	if(dender == 0){
+		dender = 1
+		if(Remote_KodiNext.state == OFF){
+			executeCommandLine("python ../extern/kodi/kodiNext.py")
+		}
+		else{
+			executeCommandLine("python ../extern/kodi/kodiPrev.py")
+		}
+		dender = 1
+		createTimer(now.plusMillis(200)) [ |dender = 0 ]
+	}
+end
+ 

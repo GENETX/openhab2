@@ -1,0 +1,14 @@
+Group GRP_DEVICES
+
+Switch	Media_Subwoofer	"Subwoofer"	<volume>		(GRP_DEVICES)		//{ rfxcom=">P.10:LIGHTING1.AB400D:Command" }
+Switch	Power_Desktop	"Bureau"	<socket>		(GRP_DEVICES)		//{ rfxcom=">H.11:LIGHTING1.AB400D:Command" }
+Switch	Power_Receiver	"Receiver"	<socket>		(GRP_DEVICES)		//{ rfxcom=">L.13:LIGHTING1.AB400D:Command" }
+
+
+//Switch	Power_Settopbox	"Settopbox"	<switch>	(GRP_DEVICES)		//{ rfxcom=">L.11:LIGHTING1.AB400D:Command" } 
+
+//Status updates devices
+Switch Network_Desktop   	"Desktop [%s]"   	   	<present> 	(GRP_DEVICES)  //{ exec="<[/bin/sh@@-c@@ping -c 1 192.168.1.137 | grep \"packets transmitted\" | sed -e \"s/.*1 received.*/ON/\" -e \"s/.*0 received.*/OFF/\":30000:REGEX((.*))]" }
+Switch Network_Smartphone   "Smartphone [%s]"   	<present> 	(GRP_DEVICES)  //{ exec="<[/bin/sh@@-c@@ping -c 1 192.168.1.3 | grep \"packets transmitted\" | sed -e \"s/.*1 received.*/ON/\" -e \"s/.*0 received.*/OFF/\":30000:REGEX((.*))]" }
+Switch Network_Tablet   "Tablet [%s]"   			<present> 	(GRP_DEVICES)
+Switch Network_TV 		"TV [%s]"					<present> 	(GRP_DEVICES)

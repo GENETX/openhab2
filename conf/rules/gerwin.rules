@@ -1,0 +1,236 @@
+var Number timeoutCounterPhone = 0
+
+
+rule "My timeout times"
+when
+	Time cron "0 * * * * ?"  
+then
+	timeoutCounterPhone = timeoutCounterPhone + 1
+		
+	if(timeoutCounterPhone > 9 && My_Status.state == 4){
+		sendCommand(Phone_State, 'away')
+		sendCommand(Phone_HB, 'away')
+		sendCommand(My_Status, 2) //Away
+		callScript("lights")
+		createTimer(now.plusMillis(2000)) [ |callScript("standby")]
+	}
+end
+
+
+/*** Mijn eigen state ***/
+rule "My Default My_State Change"
+when
+	Item My_Status changed
+then
+	callScript("lights")
+	createTimer(now.plusMillis(2000)) [ |callScript("standby")]
+
+	if(My_Status.state < 3){
+		sendCommand(Security_Alarm, ON)
+	}
+	else{
+		sendCommand(Security_Alarm, OFF)
+	}
+end
+
+
+
+rule "My Default Update phone 2"
+when
+		Item Phone_HB changed to heartbeat
+	or
+		Item Phone_State changed from away to idle
+	or
+		Item Phone_State changed from charging to idle
+then
+	timeoutCounterPhone = 0
+	if(My_Status.state < 4){	
+		sendCommand(My_Status, 4) //Home
+	}
+end
+
+
+rule "My Default Phone heartbeat"
+when
+	Item Phone_HB received update
+then
+	timeoutCounterPhone = 0
+	if(My_Status.state < 3){
+		sendCommand(My_Status, 4)
+	}
+end
+
+rule "My Default Going to bed probably"
+when
+	Item Phone_State changed to charging
+then
+	if(now.getHourOfDay > 21 || now.getHourOfDay < 6){ //Only after 21, so 22 or later time to go to bed ;)
+		sendCommand(Light_Slaapkamer, 75)
+		sendCommand(My_Status, 3) //Sleeping
+		createTimer(now.plusMillis(60000)) [ |sendCommand(Light_Slaapkamer, 50) ]
+		createTimer(now.plusMillis(90000)) [ |sendCommand(Light_Slaapkamer, 25) ]
+		createTimer(now.plusMillis(119000)) [ |sendCommand(Light_Slaapkamer, 1) ]
+		createTimer(now.plusMillis(120000)) [ |sendCommand(Light_Slaapkamer, 0) ]
+	}
+end
+
+
+rule "My Enable Alarm"
+when
+	Time cron "0 0 18 * * ?"  
+then
+	if(My_Tomorrow.state == 1){
+		sendCommand(My_Alarm_Enabled, ON)
+		sendCommand(My_Alarm_Hour, 7)
+		sendCommand(My_Alarm_Minute, 0)
+	}
+end
+
+
+
+/*select days */
+rule "MY Activeer maandag"
+when
+  Time cron "0 0 0 ? * MON"
+then
+  sendCommand(My_Today, My_Tomorrow.state.toString())
+  sendCommand(My_Tomorrow, My_PlanTue.state.toString())
+end
+
+rule "MY Activeer dinsdag"
+when
+  Time cron "0 0 0 ? * TUE"
+then
+  sendCommand(My_Today, My_Tomorrow.state.toString())
+  sendCommand(My_Tomorrow, My_PlanWed.state.toString())
+end
+
+rule "MY Activeer woensdag"
+when
+  Time cron "0 0 0 ? * WED"
+then
+  sendCommand(My_Today, My_Tomorrow.state.toString())
+  sendCommand(My_Tomorrow, My_PlanThu.state.toString())
+end
+
+rule "MY Activeer donderdag"
+when
+  Time cron "0 0 0 ? * THU"
+then
+  sendCommand(My_Today, My_Tomorrow.state.toString())
+  sendCommand(My_Tomorrow, My_PlanFri.state.toString())
+end
+
+rule "MY Activeer vrijdag"
+when
+  Time cron "0 0 0 ? * FRI"
+then
+  sendCommand(My_Today, My_Tomorrow.state.toString())
+  sendCommand(My_Tomorrow, My_PlanSat.state.toString())
+end
+
+rule "MY Activeer zaterdag"
+when
+  Time cron "0 0 0 ? * SAT"
+then
+  sendCommand(My_Today, My_Tomorrow.state.toString())
+  sendCommand(My_Tomorrow, My_PlanSun.state.toString())
+end
+
+rule "MY Activeer zondag"
+when
+  Time cron "0 0 0 ? * SUN"
+then
+  sendCommand(My_Today, My_Tomorrow.state.toString())
+  sendCommand(My_Tomorrow, My_PlanMon.state.toString())
+end
+
+
+
+
+
+rule "My Media type changed"
+when
+	Item Kodi_Type changed
+then
+	if(Kodi_Type.state == 'movie'){
+		sendCommand(My_Scene, 3)
+	}
+	else if(Kodi_Type.state == 'episode'){
+		sendCommand(My_Scene, 2)
+	}
+	else if(Network_Desktop == ON){
+		sendCommand(My_Scene, 1)
+	}
+	else {
+		sendCommand(My_Scene, 4)
+	}
+end
+
+
+rule "My Schene changed"
+when
+	Item My_Scene changed
+then
+	if(My_Scene.state == 3){
+		//Movie!
+		if(Config_Media.state == ON){
+			sendCommand(AV_Volume, 54) 
+			sendCommand(Media_Subwoofer, ON)
+		}
+		if(Config_Light.state == ON && Light_Master.state > 0){
+			sendCommand(Light_Master, 40)
+		}
+	}
+	else if(My_Scene.state == 2){
+		//Movie!
+		if(Config_Media.state == ON){
+			sendCommand(AV_Volume, 41) 
+			sendCommand(Media_Subwoofer, OFF)
+		}
+		if(Config_Light.state == ON && Light_Master.state > 0){
+			sendCommand(Light_Master, 40)
+		}
+	}
+	else {
+		if(Config_Media.state == ON){
+			sendCommand(AV_Volume, 38) 
+			sendCommand(Media_Subwoofer, OFF)
+		}
+		if(Config_Light.state == ON && Light_Master.state > 0){
+			sendCommand(Light_Master, 80)
+		}
+	}
+end
+
+
+
+
+
+
+
+
+
+/*
+rule "My Default Update phone"
+when
+	Item Network_Smartphone received update
+then
+	if(Network_Smartphone.state == OFF){
+		//no timeout yet
+		if(timeoutCounterPhone < 5 && My_Status.state == 4){
+			timeoutCounterPhone = timeoutCounterPhone + 1
+		}
+		if(timeoutCounterPhone > 4 && My_Status.state == 4){
+			sendCommand(My_Status, 2) //Away
+			callScript("lights")
+			callScript("standby")]
+			sendCommand(Phone_State, 'away')
+			sendCommand(Phone_HB, 'away')
+		}
+	}
+	if(Network_Smartphone.state == ON){
+		timeoutCounterPhone = 0
+	}
+end
+*/

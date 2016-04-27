@@ -1,0 +1,8 @@
+//Astro
+DateTime	Sunrise_Time	"Zonsopkomst [%1$tH:%1$tM]"		<sunrise>	
+DateTime	Sunset_Time		"Zonsondergang [%1$tH:%1$tM]"	<sunset>	
+Number		Azimuth			"Azimuth [%.2f]"				<none>			
+Number		Elevation		"Elevation [%.2f]"				<none>			
+
+String	Sunrise_Time_Str	"Zonsopkomst [%s]"		<sunrise>	
+String	Sunset_Time_Str		"Zonsondergang [%s]"	<sunset>	

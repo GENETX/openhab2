@@ -1,0 +1,98 @@
+var Number alarmOn = 0
+
+//Change of lights
+rule "Light Master Update"
+when
+	Item Light_Master received update
+then
+	callScript("lights") 
+end
+
+
+//alarm
+rule "Light wakeup"
+when
+	Time cron "10 * * * * ?" 
+then
+	if(Config_Light.state == ON){
+		var Number hour = 0
+        hour = My_Alarm_Hour.state as Number
+        var Number minute = 0
+        minute = My_Alarm_Minute.state as Number
+        
+		if(My_Status.state == 3 && My_Alarm_Enabled.state == ON && now.getHourOfDay == hour && now.getMinuteOfHour == minute){
+			alarmOn = 1
+			sendCommand(Light_Slaapkamer, 5)
+			sendCommand(My_Alarm_Enabled, OFF)
+		} 
+	}
+end
+
+//Increase light on alarm
+rule "Light Increase"
+when
+	Item Light_Slaapkamer changed
+then
+	if(alarmOn == 1 && My_Status.state == 3){
+		var Number percent = 0
+        percent = Light_Slaapkamer.state as Number
+		percent = percent + 1
+		if(percent >= 100){
+			percent = 100
+			alarmOn = 0
+		}
+		createTimer(now.plusMillis(12000)) [ |sendCommand(Light_Slaapkamer, percent) ]
+	}
+	else{
+		alarmOn = 0
+	}
+end 
+
+
+rule "Light Auto on and off"
+when
+	Item Elevation changed
+then
+	if(Config_Light.state == ON){
+		if(now.getHourOfDay > 12 && Light_Master.state == 0){
+			//Afernoon, turn lights on
+			if(Elevation.state < 6 && Weather_Clouds.state > 80){
+				if(My_Scene.state != 3){
+					sendCommand(Light_Master, 80)
+				}
+				else{
+					sendCommand(Light_Master, 40)
+				}
+			}
+			else if(Elevation.state < 3 && Weather_Clouds.state > 50){
+				if(My_Scene.state != 0){
+					sendCommand(Light_Master, 80)
+				}
+				else{
+					sendCommand(Light_Master, 40)
+				}
+			}
+			else if(Elevation.state <= 0){
+				if(My_Scene.state != 3){
+					sendCommand(Light_Master, 80)
+				}
+				else{
+					sendCommand(Light_Master, 40)
+				}				
+			}
+		}
+		else if(Light_Master.state > 0){{
+			//Turn lights off
+			if(Elevation.state >= 0 && Weather_Clouds.state < 50){
+				sendCommand(Light_Master, 0)
+			}
+			else if(Elevation.state > 3 && Weather_Clouds.state < 80){
+				sendCommand(Light_Master, 0)
+			}
+			else if(Elevation.state > 6){
+				sendCommand(Light_Master, 0)
+			}
+		}
+	}
+end
+	

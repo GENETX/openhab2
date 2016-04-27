@@ -1,0 +1,192 @@
+var Number cvSpChanged = 0
+
+
+rule "CV CV_Update"
+when
+	Item CV_Setpoint changed
+then
+	if(Config_Thermostat.state == ON){
+		cvSpChanged = 1
+	}
+end
+
+
+
+//Change of state, adjust setpoint
+
+rule "CV Going away for a longer time"
+when
+	Item My_Status changed to 1
+then
+	if(Config_Thermostat.state == ON){
+		sendCommand(CV_Setpoint, CV_TempAway.state.toString())
+	}
+end
+
+rule "CV Going away"
+when
+	Item My_Status changed to 2
+then
+	if(Config_Thermostat.state == ON){
+		sendCommand(CV_Setpoint, CV_TempAway.state.toString())
+	}
+end
+
+rule "CV Going to sleep"
+when
+	Item My_Status changed to 3
+then
+	if(Config_Thermostat.state == ON){
+		sendCommand(CV_Setpoint, CV_TempAway.state.toString())
+	}
+end
+
+rule "CV Coming home"
+when
+	Item My_Status changed to 4
+then
+	if(Config_Thermostat.state == ON){
+		if(now.getHourOfDay > 10 || now.getHourOfDay < 23)
+			sendCommand(CV_Setpoint, CV_TempHome.state.toString())
+		}
+	}
+end
+
+
+
+
+rule "CV Get and set temperature"
+when
+	Time cron "50 * * * * ?"  
+then
+	if(cvSpChanged == 1){
+		if(Config_Thermostat.state == ON){
+			executeCommandLine("python ../extern/honeywell/setHoneywellTemp.py")
+		}
+	}
+	else{
+		executeCommandLine("python ../extern/honeywell/pullHoneywell.py")
+	}
+	cvSpChanged = 0
+end
+
+
+
+
+
+
+
+rule "CV Smartstart"
+when
+	Time cron "30 * * * * ?"  
+then
+	if(Config_Thermostat.state == ON){
+		if(CV_SStart_Enabled.state == ON){
+			executeCommandLine("python ../extern/honeywell/smartStart.py")
+		}
+	}
+end
+
+
+
+
+
+
+
+/*  Normal program */
+rule "CV Schema 1 - Smartstart voorverwarmen in de ochtend"
+when 
+	Time cron "0 30 6 * * ?"  
+then
+	if(My_Today.state==1 && My_Status.state > 1){
+		sendCommand(CV_SStart_Hour, 7)
+		sendCommand(CV_SStart_Min, 30)
+		sendCommand(CV_SStart_Setpoint, CV_TempMorning.state.toString())
+		sendCommand(CV_SStart_Enabled, ON)
+	}
+end
+
+rule "CV Schema 1 - Afkoelen in de ochtend"
+when 
+	Time cron "0 45 7 * * ?"   // 7:45 Einde verwarmen
+then
+	if(My_Today.state==1 && My_Status.state > 1){
+		sendCommand(CV_Setpoint, CV_TempAway.state.toString())
+	}
+end
+
+rule "CV Schema 1 - Verwarmen in de avond"
+when 
+	Time cron "0 30 16 * * ?"  
+then
+	if(My_Today.state==1 && My_Status.state > 1){
+		sendCommand(CV_SStart_Hour, 17)
+		sendCommand(CV_SStart_Min, 30)
+		sendCommand(CV_SStart_Setpoint, CV_TempHome.state.toString())
+		sendCommand(CV_SStart_Enabled, ON)
+	}
+end
+
+rule "CV Schema 1 - Afkoelen in de avond"
+when 
+	Time cron "0 30 22 * * ?"   // 22:15 Naar bed gaan
+then
+	if(My_Today.state==1 && My_Status.state > 1){
+		sendCommand(CV_Setpoint, CV_TempAway.state.toString())
+	}
+end
+
+
+
+
+
+
+
+/* Free day */
+rule "CV Schema 2 - Voorverwarmen in de ochtend"
+when 
+	Time cron "0 0 9 * * ?"  
+then
+	if(My_Today.state==2 && My_Status.state > 1){
+		sendCommand(CV_SStart_Hour, 10)
+		sendCommand(CV_SStart_Min, 0)
+		sendCommand(CV_SStart_Setpoint, CV_TempMorning.state.toString())
+		sendCommand(CV_SStart_Enabled, ON)
+	}
+end
+
+rule "CV Schema 2 - Doorverwarmen in de middag"
+when 
+	Time cron "0 0 12 * * ?"  
+then
+	if(My_Today.state==2 && My_Status.state > 1){
+		sendCommand(CV_SStart_Hour, 12)
+		sendCommand(CV_SStart_Min, 30)
+		sendCommand(CV_SStart_Setpoint, CV_TempHome.state.toString())
+		sendCommand(CV_SStart_Enabled, ON)
+	}
+end
+
+rule "CV Schema 2 - Extra verwarming in de avond"
+when 
+	Time cron "0 0 20 * * ?"  
+then
+	if(My_Today.state==2 && My_Status.state > 1){
+		sendCommand(CV_SStart_Hour, 20)
+		sendCommand(CV_SStart_Min, 30)
+		sendCommand(CV_SStart_Setpoint, CV_TempEvening.state.toString())
+		sendCommand(CV_SStart_Enabled, ON)
+	}
+end
+
+rule "CV Schema 2 - Afkoelen in de avond"
+when 
+	Time cron "0 30 22 * * ?"   // 23:00 Naar bed gaan
+then
+	if(My_Today.state==2 && My_Status.state > 1){
+		sendCommand(CV_Setpoint, CV_TempAway.state.toString())
+	}
+end
+
+
+

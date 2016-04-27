@@ -1,0 +1,18 @@
+Group GRP_METER
+
+Number Meter_ELLaag			"Elek.stand laag [%.0f kWh]" 		<energy>		(GRP_METER)	
+Number Meter_ELHoog			"Elek.stand hoog [%.0f kWh]" 		<energy>		(GRP_METER)
+Number Meter_ELTotaal		"Elek.stand [%.0f kWh]" 			<energy>		(GRP_METER)
+Number Meter_ELLaagDag		"Elek.laatste laag [%.0f kWh]" 		<energy>		(GRP_METER)
+Number Meter_ELHoogDag		"Elek.laatste hoog [%.0f kWh]" 		<energy>		(GRP_METER)
+Number Meter_ELTotaalDag	"Elek.laatste [%.0f kWh]" 			<energy>		(GRP_METER)
+Number Meter_Gas			"Gasstand [%.0f m3]"				<fire>			(GRP_METER)
+Number Meter_GasDecimal		"Gasstand decimaal [%.1f m3]"		<fire>			(GRP_METER)
+Number Meter_GasTotaal		"Gasstand [%.1f m3]"				<fire>			(GRP_METER)
+Number Meter_GasDag			"Gas laatste [%.1f m3]"				<fire>			(GRP_METER)
+Number Meter_Water			"Waterstand [%.1f m3]" 				<water>			(GRP_METER)
+Number Meter_WaterDag		"Water laatste [%.1f m3]" 			<water>			(GRP_METER)
+Number Meter_GraaddagDag	"Graadd.laastste [%.1f]"			<temperature>	(GRP_METER)
+Number Meter_GasdagDag		"Gas gd laatste [%.1f]"				<temperature>	(GRP_METER)
+
+Switch Meter_Submit			"Doorvoeren"						<chart>			(GRP_METER)

@@ -1,0 +1,8 @@
+Group GRP_CONFIG
+
+Switch 	Config_All 			"OpenHAB Master" 	<settings> 		(GRP_CONFIG)
+Switch 	Config_Light 		"Verlichting" 		<settings> 		(GRP_CONFIG)
+Switch 	Config_Standby 		"Standby" 			<settings> 		(GRP_CONFIG)
+Switch 	Config_Thermostat	"Thermostaat" 		<settings> 		(GRP_CONFIG)
+Switch 	Config_Media 		"Media" 			<settings> 		(GRP_CONFIG)
+Switch 	Config_Other		"Overige"			<settings> 		(GRP_CONFIG)

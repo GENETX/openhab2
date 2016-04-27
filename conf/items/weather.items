@@ -1,0 +1,32 @@
+Group GRP_WEATHER (ALL)
+Group GRP_WEATHER_CHART
+
+//Weer
+Number	Weather_Temperature		"Temperatuur buiten [%.1f °C]"		<temperature>	(GRP_WEATHER)		{ http="<[openweathermap:300000:XSLT(openweathermap.org_temperature.xsl)]" }
+Number	Weather_Temp_Max		"Temp buiten Max [%.1f °C]"			<temperature>	(GRP_WEATHER)		{ http="<[openweathermap:300000:XSLT(openweathermap.org_temperature_high.xsl)]" }
+Number	Weather_Temp_Min		"Temp buiten Min [%.1f °C]"			<temperature>	(GRP_WEATHER)		{ http="<[openweathermap:300000:XSLT(openweathermap.org_temperature_low.xsl)]" }
+Number	Weather_Wind_Speed		"Windsnelheid [%.1f m/s]"			<wind>			(GRP_WEATHER)		{ http="<[openweathermap:300000:XSLT(openweathermap.org_wind_speed.xsl)]" }
+String	Weather_Wind_Direction	"Windrichting [%s]"					<wind>			(GRP_WEATHER)		{ http="<[openweathermap:300000:XSLT(openweathermap.org_wind_direction.xsl)]" }
+Number	Weather_Humidity		"Luchtvochtigheid buiten [%.1f %%]"	<humidity>		(GRP_WEATHER)		{ http="<[openweathermap:300000:XSLT(openweathermap.org_humidity.xsl)]" }
+Number	Weather_Pressure		"Luchtdruk buiten [%.1f hPa]"		<temperature>	(GRP_WEATHER)		{ http="<[openweathermap:300000:XSLT(openweathermap.org_pressure.xsl)]" }
+Number	Weather_Clouds			"Bewolking [%.1f %%]"				<sun_clouds>	(GRP_WEATHER)		{ http="<[openweathermap:300000:XSLT(openweathermap.org_clouds.xsl)]" }
+
+
+Number 	Temperature_Delta			"Delta Temperatuur [%.1f °C]" 	<temperature>	(GRP_WEATHER)
+
+
+Number	Weather_StreetTemperature	"Temperatuur buiten  [%.1f °C]"		<temperature>	(GRP_WEATHER) 	//{ rfxcom="<21504:Temperature" }
+Number	Weather_StreetHumidity		"Luchtvochtigheid buiten [%.1f %%]"	<humidity>		(GRP_WEATHER)	//{ rfxcom="<21504:Humidity" }
+
+
+//Fix for the Basic UI bug on formatted strings
+String	Weather_Temperature_Str		"Temperatuur buiten [%s]"		<temperature>		(GRP_WEATHER)
+String	Weather_Temp_Max_Str		"Temp buiten Max [%s]"			<temperature>		(GRP_WEATHER)
+String	Weather_Temp_Min_Str		"Temp buiten Min [%s]"			<temperature>		(GRP_WEATHER)
+String	Weather_Wind_Speed_Str		"Windsnelheid [%s]"			<wind>					(GRP_WEATHER)
+String	Weather_Humidity_Str		"Luchtvochtigheid buiten [%s]"	<humidity>			(GRP_WEATHER)
+String	Weather_Pressure_Str		"Luchtdruk buiten [%s]"		<temperature>			(GRP_WEATHER)
+String	Weather_Clouds_Str			"Bewolking [%s]"				<sun_clouds>		(GRP_WEATHER)
+
+String	Weather_StreetTemperature_Str	"Temperatuur buiten  [%s]"		<temperature>	(GRP_WEATHER)
+String	Weather_StreetHumidity_Str		"Luchtvochtigheid buiten [%s]"	<humidity>		(GRP_WEATHER)

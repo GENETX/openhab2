@@ -1,0 +1,59 @@
+rule "Meter Meterstanden ingeven"
+when 
+	Item Meter_Submit changed from OFF to ON
+then
+	//Get the difference
+	var Number HELL = (Meter_ELLaag.historicState(now().minusMinutes(10), "mysql").state as DecimalType)
+	var Number HELH = (Meter_ELHoog.historicState(now().minusMinutes(10), "mysql").state as DecimalType)
+	var Number ELL = (Meter_ELLaag.state as DecimalType)
+	var Number ELH = (Meter_ELHoog.state as DecimalType)
+	var Number DELL = ELL - HELL
+	var Number DELH = ELH - HELH
+	var Number DEL = DELL + DELH
+	var Number EL = ELL + ELH
+	
+	var Number HGA = (Meter_Gas.historicState(now().minusMinutes(10), "mysql").state as DecimalType)
+	var Number GA = (Meter_Gas.state as DecimalType)
+	var Number HGD = (Meter_GasDecimal.historicState(now().minusMinutes(10), "mysql").state as DecimalType)
+	var Number GD = (Meter_GasDecimal.state as DecimalType)
+	var Number HG = HGA + HGD
+	var Number G = GA + GD
+	var Number DG = G - HG
+	
+	var Number HW = (Meter_Water.historicState(now().minusMinutes(10), "mysql").state as DecimalType)
+	var Number W = (Meter_Water.state as DecimalType)
+	var Number DW = W - HW
+	
+	postUpdate(Meter_ELLaagDag, DELL)
+	postUpdate(Meter_ELHoogDag, DELH)
+	postUpdate(Meter_ELTotaal, EL)
+	postUpdate(Meter_ELTotaalDag, DEL)
+	postUpdate(Meter_GasTotaal, G)
+	postUpdate(Meter_GasDag, DG)
+	postUpdate(Meter_WaterDag, DW)
+	
+	createTimer(now.plusMillis(2000)) [ |sendCommand(Meter_Submit, OFF) ]
+end
+
+rule "Meter Graaddagen berekenen"
+when
+	Time cron "0 59 23 * * ?"
+then
+	var Number AvgTI = (CV_Temperature.averageSince(now().minusDays(1), "mysql") as DecimalType)
+	var Number AvgTO = (Weather_Temperature.averageSince(now().minusDays(1), "mysql") as DecimalType)
+	var Number GraadDag = AvgTI - AvgTO
+	
+	if(GraadDag <= 0){
+		postUpdate(Meter_GraaddagDag, GraadDag)
+
+		var Number GD = (Meter_GasdagDag.state as DecimalType)
+		postUpdate(Meter_GasdagDag, GD)
+	}
+	else{
+		postUpdate(Meter_GraaddagDag, GraadDag)
+		
+		var Number G = (Meter_GasDag.state as DecimalType)
+		var Number GD = G / GraadDag
+		postUpdate(Meter_GasdagDag, GD)
+	}
+end

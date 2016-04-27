@@ -1,0 +1,26 @@
+Group GRP_CLIMATE
+
+Number	Inside_Temperature	"Temperatuur binnen [%.1f °C]"		<temperature>	(GRP_CLIMATE)	//{ rfxcom="<19726:Temperature" }
+Number	Inside_Humidity		"Luchtvochtigheid binnen [%.1f %%]"	<humidity>		(GRP_CLIMATE)	 //{ rfxcom="<19726:Humidity" }
+ 
+Number	CV_Setpoint			"Setpoint Honeywell [%.1f °C]"		<temperature>	(GRP_CLIMATE)	
+Number	CV_Temperature		"Temperatuur Honeywell [%.1f °C]"	<temperature>	(GRP_CLIMATE)	
+
+Number	CV_TempAway			"Temperatuur weg [%.1f °C]"			<heating>		(GRP_CLIMATE)
+Number	CV_TempHome			"Temperatuur thuis [%.1f °C]"		<heating>		(GRP_CLIMATE)
+Number	CV_TempMorning		"Temperatuur ochtend [%.1f °C]"		<heating>		(GRP_CLIMATE)
+Number	CV_TempEvening		"Temperatuur avond [%.1f °C]"		<heating>		(GRP_CLIMATE)
+
+Number CV_SStart_Hour 		"SmartStart uur [%d]" 				<clock-on>		(GRP_CLIMATE)
+Number CV_SStart_Min 		"SmartStart minuut [%d]" 			<clock-on>		(GRP_CLIMATE)
+Number CV_SStart_Setpoint 	"SmartStart setpoint [%.1f °C]" 	<heating>		(GRP_CLIMATE)
+Number CV_SStart_Dev 		"SmartStart deviation [%.1f °C]" 	<heating>		(GRP_CLIMATE)
+Switch CV_SStart_Enabled 	"SmartStart aan" 					<switch>		(GRP_CLIMATE)
+
+Number ThermoParamA		(GRP_CLIMATE)
+Number ThermoParamB		(GRP_CLIMATE)
+Number ThermoParamC		(GRP_CLIMATE)
+
+String	Inside_Temperature_Str	"Temperatuur binnen [%s]"		<temperature>	
+String	Inside_Humidity_Str		"Luchtvochtigheid binnen [%s]"	<humidity>	
+String	CV_Temperature_Str		"Temperatuur Honeywell [%s]"	<temperature>

@@ -1,0 +1,76 @@
+// persistence strategies have a name and a definition and are referred to in the "Items" section
+Strategies {
+	// for rrd charts, we need a cron strategy
+	//perMinute : "0 * * * * ?"
+}
+
+Items {
+	* : everyChange, restoreOnStartup
+}
+
+	My_State : strategy = everyChange, restoreOnStartup
+	My_Scene : strategy = everyChange, restoreOnStartup
+	
+	My_Today : strategy = everyChange, everyUpdate, restoreOnStartup
+	My_Tomorrow : strategy = everyChange, everyUpdate, restoreOnStartup
+	My_PlanMon : strategy = everyChange, everyUpdate, restoreOnStartup
+	My_PlanTue : strategy = everyChange, everyUpdate, restoreOnStartup
+	My_PlanWed : strategy = everyChange, everyUpdate, restoreOnStartup
+	My_PlanThu : strategy = everyChange, everyUpdate, restoreOnStartup
+	My_PlanFri : strategy = everyChange, everyUpdate, restoreOnStartup
+	My_PlanSun : strategy = everyChange, everyUpdate, restoreOnStartup
+	My_PlanSat : strategy = everyChange, everyUpdate, restoreOnStartup
+	
+	Light_Master : strategy = everyChange, restoreOnStartup
+	
+	CV_Setpoint : strategy = everyChange, everyUpdate, restoreOnStartup
+	CV_Temperature : strategy = everyChange, everyUpdate, restoreOnStartup
+	CV_TempAway : strategy = everyChange, everyUpdate, restoreOnStartup
+	CV_TempIdle : strategy = everyChange, everyUpdate, restoreOnStartup
+	CV_TempHome : strategy = everyChange, everyUpdate, restoreOnStartup
+	CV_TempMorning : strategy = everyChange, restoreOnStartup
+	CV_TempEvening : strategy = everyChange, restoreOnStartup
+		
+	CV_SStart_Enabled : strategy = everyChange, everyUpdate, restoreOnStartup
+	CV_SStart_Hour : strategy = everyChange, everyUpdate, restoreOnStartup
+	CV_SStart_Min : strategy = everyChange, everyUpdate, restoreOnStartup
+	CV_SStart_Setpoint : strategy = everyChange, everyUpdate, restoreOnStartup
+	CV_SStart_Dev : strategy = everyChange, everyUpdate, restoreOnStartup
+	
+	XBMC_State : strategy = everyChange, restoreOnStartup
+	Phone_State : strategy = everyChange, restoreOnStartup	
+	Phone_HB : strategy = everyChange, restoreOnStartup	
+	
+	Weather_Temperature : strategy = everyChange, everyUpdate, restoreOnStartup
+	Weather_Temp_Max : strategy = everyChange, everyUpdate, restoreOnStartup
+	Weather_Temp_Min : strategy = everyChange, everyUpdate, restoreOnStartup
+	Weather_Wind_Speed : strategy = everyChange, everyUpdate, restoreOnStartup
+	Weather_Wind_Direction : strategy = everyChange, everyUpdate, restoreOnStartup
+	Weather_Humidity : strategy = everyChange, everyUpdate, restoreOnStartup
+	Weather_Pressure : strategy = everyChange, everyUpdate, restoreOnStartup
+	Weather_Clouds : strategy = everyChange, everyUpdate, restoreOnStartup
+	
+	Meter_ELLaag : strategy = everyChange, everyUpdate, restoreOnStartup
+	Meter_ELHoog : strategy = everyChange, everyUpdate, restoreOnStartup
+	Meter_ELTotaal : strategy = everyChange, everyUpdate, restoreOnStartup
+	Meter_ELLaagDag : strategy = everyChange, everyUpdate, restoreOnStartup
+	Meter_ELHoogDag : strategy = everyChange, everyUpdate, restoreOnStartup
+	Meter_ELTotaalDag : strategy = everyChange, everyUpdate, restoreOnStartup
+	Meter_Gas : strategy = everyChange, everyUpdate, restoreOnStartup
+	Meter_GasDecimal : strategy = everyChange, everyUpdate, restoreOnStartup
+	Meter_GasTotaal : strategy = everyChange, everyUpdate, restoreOnStartup
+	Meter_GasDag : strategy = everyChange, everyUpdate, restoreOnStartup
+	Meter_Water : strategy = everyChange, everyUpdate, restoreOnStartup
+	Meter_WaterDag : strategy = everyChange, everyUpdate, restoreOnStartup
+	Meter_GraaddagDag : strategy = everyChange, everyUpdate, restoreOnStartup
+	Meter_GasdagDag : strategy = everyChange, everyUpdate, restoreOnStartup
+
+	ThermoParamA: strategy = everyChange, everyUpdate, restoreOnStartup
+	ThermoParamB: strategy = everyChange, everyUpdate, restoreOnStartup
+	ThermoParamC: strategy = everyChange, everyUpdate, restoreOnStartup
+	
+	Weather_StreetTemperature : strategy = everyChange, everyUpdate, restoreOnStartup
+	Weather_StreetTemperature : strategy = everyChange, everyUpdate, restoreOnStartup
+	Inside_Temperature : strategy = everyChange, everyUpdate, restoreOnStartup
+	Inside_Humidity : strategy = everyChange, everyUpdate, restoreOnStartup
+}

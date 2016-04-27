@@ -1,0 +1,10 @@
+var boolean reloadOnce = true
+rule "Refresh rules after persistance service started"
+  when System started
+then
+  if(reloadOnce)
+    executeCommandLine("./configurations/rules_refresh.sh")
+  else
+    println("reloadOnce is false")
+  reloadOnce = false
+end 

@@ -1,0 +1,8 @@
+rule "Device Desktop chanfes"
+	Item Network_Desktop changed
+then 
+	callScript("lights")
+	if(My_Status.state < 4 && Network_Desktop.state == OFF){
+		createTimer(now.plusMillis(600000)) [ |callScript("standby") ]
+	}
+end

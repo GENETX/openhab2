@@ -1,0 +1,15 @@
+Bridge rfxcom:bridge:usb0 [ serialPort="/dev/ttyUSB0" ] {
+    Thing lighting1 computerlamp 	[ deviceId="L.10", subType="AB400D" ]
+    Thing lighting1 groenelamp 		[ deviceId="P.13", subType="AB400D" ]
+    Thing lighting1 staandelamp 	[ deviceId="P.11", subType="AB400D" ]
+    Thing lighting1 leeslamp 		[ deviceId="H.13", subType="AB400D" ]
+    Thing lighting1 subwoofer 		[ deviceId="P.10", subType="AB400D" ]
+    Thing lighting1 bureau			[ deviceId="H.11", subType="AB400D" ]
+    Thing lighting1 receiver		[ deviceId="L.13", subType="AB400D" ]
+    Thing lighting1 spare			[ deviceId="L.11", subType="AB400D" ]
+    Thing lighting4 remotelight 	[ deviceId="263429", subType="PT2262" ]
+    Thing lighting4 remotevolume 	[ deviceId="266501", subType="PT2262" ]
+    Thing lighting4 remotekodipp 	[ deviceId="267269", subType="PT2262" ]
+    Thing lighting4 remotekodipn	[ deviceId="267521", subType="PT2262" ]
+    Thing chime doorbell 			[ deviceId="174", subType="SELECTPLUS" ]
+}

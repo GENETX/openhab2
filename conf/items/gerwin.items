@@ -1,0 +1,31 @@
+//Groups
+Group GRP_ME
+
+//Status
+Number	My_Status		"Status" 		<man_3> 	(GRP_ME)
+Number 	My_Scene		"Activiteit" 	<sofa> 		(GRP_ME)
+
+Switch	Doorbell		"Deurbel"		<door> 		(GRP_ME)
+Number 	Doorbell_Sound	"Deurbel"		<door>		(GRP_ME) //{ rfxcom="<174:ChimeSound" }
+
+
+Number	My_Today	"Vandaag" 				<clock> 	(GRP_ME)
+Number	My_Tomorrow	"Morgen" 				<clock> 	(GRP_ME)
+Number	My_PlanMon	"Programma maandag" 	<clock> 	(GRP_ME)
+Number	My_PlanTue	"Programma dinsdag" 	<clock> 	(GRP_ME)
+Number	My_PlanWed	"Programma woensdag" 	<clock> 	(GRP_ME)
+Number	My_PlanThu	"Programma donderdag" 	<clock> 	(GRP_ME)
+Number	My_PlanFri	"Programma vrijdag" 	<clock> 	(GRP_ME)
+Number	My_PlanSat	"Programma zaterdag" 	<clock> 	(GRP_ME)
+Number	My_PlanSun	"Programma zondag" 		<clock> 	(GRP_ME)
+
+String	Phone_State	"idle"
+String	Phone_HB	"idle"
+
+Number My_Alarm_Hour	"Wekker uur [%d]"		<clock> 	(GRP_ME)
+Number My_Alarm_Minute	"Wekker minuut [%d]"	<clock> 	(GRP_ME)
+Switch My_Alarm_Enabled	"Wekker aan"			<clock> 	(GRP_ME)
+
+
+Switch  Presence_Gerwin   "Gerwin"   { mqttitude="mqttbroker:owntracks/gerwin/phone/event:home" } 
+//String  Presence_Gerwin2  "x [%s]"   { mqtt="<[mqttbroker:owntracks/gerwin/phone:command:default]" }

@@ -1,0 +1,21 @@
+Group	GRP_LIGHT	(All)
+
+Dimmer	Light_Master		"Master verlichting" <slider>
+
+Dimmer	Light_Kamer			"Kamer"				<slider> 	(GRP_LIGHT)		{milight="leds;8;brightness;27"}	
+Switch	Light_Read			"LeesLamp"			<light>		(GRP_LIGHT)		//{ rfxcom=">H.13:LIGHTING1.AB400D:Command" }
+Switch	Light_Computer		"ComputerLamp"		<light>		(GRP_LIGHT)		//{ rfxcom=">L.10:LIGHTING1.AB400D:Command" } 
+Dimmer  Light_Eetkamer 		"Eetkamer" 			<slider> 	(GRP_LIGHT) 	{milight="leds;7;brightness;27"}
+Dimmer  Light_Hal			"Hal" 				<slider> 	(GRP_LIGHT)		{milight="leds;3;brightness;27"}
+Dimmer  Light_Slaapkamer 	"Slaapkamer" 		<slider> 	(GRP_LIGHT)		{milight="leds;4;brightness;27"}
+
+//Advanced
+Switch  Light_Kamer_White 		"Kamer wit" 		<light> 			(GRP_LIGHT) 	{milight="leds;8;whiteMode"}
+Color  	Light_Kamer_Colour 		"Kamer kleur" 			<colorwheel> 		(GRP_LIGHT) 	{milight="leds;8;rgb"}
+
+Switch  Light_Eetkamer_White 	"Eetkamer wit" 	<light> 			(GRP_LIGHT) 	{milight="leds;7;whiteMode"}
+Color  	Light_Eetkamer_Colour 	"Eetkamer kleur" 		<colorwheel> 		(GRP_LIGHT) 	{milight="leds;7;rgb"}
+
+Dimmer  Light_Hal_White 		"Hal sfeer" 		<colorwheel> 			(GRP_LIGHT) 	{milight="leds;3;colorTemperature"}
+
+Dimmer  Light_Slaapkamer_White 	"Slaapkamer sfeer" 	<colorwheel> 			(GRP_LIGHT) 	{milight="leds;4;colorTemperature"}

@@ -1,0 +1,19 @@
+rule "Init System start"
+when 
+	System started
+then
+	sendCommand(Rule_State, ON)
+	sendCommand(My_Status, 4)
+
+	sendCommand(Phone_HB, 'away')
+	sendCommand(Phone_State, 'idle')
+	
+	sendCommand(Kodi_Status, 'Stop')
+	
+	sendCommand(Meter_Submit, OFF)
+	
+	sendCommand(Light_Master, 0)
+end
+
+
+

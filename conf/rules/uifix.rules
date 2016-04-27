@@ -1,0 +1,112 @@
+/*** String workaround ***/
+rule "UIFIX Weather Temp"
+when
+	Item Weather_Temperature received update
+then
+	Weather_Temperature_Str.postUpdate(Weather_Temperature.state.format("%.1f °C"))
+end 
+
+rule "UIFIX Weather Temp Max"
+when
+	Item Weather_Temperature_Max received update
+then
+	Weather_Temperature_Max_Str.postUpdate(Weather_Temperature_Max.state.format("%.1f °C"))
+end 
+
+rule "UIFIX Weather Temp Min"
+when
+	Item Weather_Temperature_Min received update
+then
+	Weather_Temperature_Min_Str.postUpdate(Weather_Temperature_Min.state.format("%.1f °C"))
+end 
+
+rule "UIFIX Weather Wind speed"
+when
+	Item Weather_Wind_Speed received update
+then
+	Weather_Wind_Speed_Str.postUpdate(Weather_Wind_Speed.state.format("%.1f m/s"))
+end 
+
+rule "UIFIX Weather Humidity"
+when
+	Item Weather_Humidity received update
+then
+	Weather_Humidity_Str.postUpdate(Weather_Humidity.state.format("%.1f %%"))
+end 
+
+rule "UIFIX Weather Pressure"
+when
+	Item Weather_Pressure received update
+then
+	Weather_Pressure_Str.postUpdate(Weather_Pressure.state.format("%.1f hPa"))
+end 
+
+rule "UIFIX Weather Clouds"
+when
+	Item Weather_Clouds received update
+then
+	Weather_Clouds_Str.postUpdate(Weather_Clouds.state.format("%.1f %%"))
+end 
+
+rule "UIFIX Street Temp"
+when
+	Item Weather_StreetTemperature received update
+then
+	Weather_StreetTemperature_Str.postUpdate(Weather_StreetTemperature.state.format("%.1f °C"))
+end 
+
+rule "UIFIX Street Humidity"
+when
+	Item Weather_StreetHumidity received update
+then
+	Weather_StreetHumidity_Str.postUpdate(Weather_StreetHumidity.state.format("%.1f %%"))
+end 
+
+rule "UIFIX Indoor Temp"
+when
+	Item Inside_Temperature received update
+then
+	Inside_Temperature_Str.postUpdate(Inside_Temperature.state.format("%.1f °C"))
+end 
+
+rule "UIFIX Indoor Humidity"
+when
+	Item Inside_Humidity received update
+then
+	Inside_Humidity_Str.postUpdate(Inside_Humidity.state.format("%.1f %%"))
+end 
+
+rule "UIFIX CV Temp"
+when
+	Item CV_Temperature received update
+then
+	CV_Temperature_Str.postUpdate(CV_Temperature.state.format("%.1f °C"))
+end 
+
+rule "UIFIX Sunrise"
+when
+	Item Sunrise_Time received update
+then
+	Sunrise_Time_Str.postUpdate(Sunrise_Time.state.format("%1$tH:%1$tM"))
+end 
+
+rule "UIFIX Sunset"
+when
+	Item Sunset_Time received update
+then
+	Sunset_Time_Str.postUpdate(Sunset_Time.state.format("%1$tH:%1$tM"))
+end  
+
+rule "UIFIX Server CPU"
+when
+	Item Server_CPUCombined received update
+then
+	Server_CPUCombined_Str.postUpdate(Server_CPUCombined.state.format("%.1f %%"))
+end 
+
+rule "UIFIX Server RAM"
+when
+	Item Server_RamUsed received update
+then
+	Server_RamUsed_Str.postUpdate(Server_RamUsed.state.format("%.0f MB"))
+end 
