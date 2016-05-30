@@ -5,8 +5,8 @@ sitemap default label="Huis"
 		Selection item=My_Scene mappings=[1="Computeren", 2="TV", 3="Film", 4="Overig"]
 		Slider item=Light_Master
 		Selection item=My_Today mappings=[1="Werk", 2="Vrij", 3="Manual"]
-		Setpoint item=CV_Setpoint minValue=14.0 maxValue=22 step=0.5
-		//Switch item=Doorbell
+		//Setpoint item=CV_Setpoint minValue=14.0 maxValue=22 step=0.5
+		Switch item=Doorbell
 		//Switch item=Presence_Gerwin 
 		//String item=Presence_Gerwin2
 		
@@ -42,6 +42,7 @@ sitemap default label="Huis"
 				Switch item=Power_Desktop
 				Switch item=Power_Receiver
 				Switch item=Media_Subwoofer
+				Switch item=TV_Power
 			}
 			Frame label="Media" {
 				Switch item=AV_Power

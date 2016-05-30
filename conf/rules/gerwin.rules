@@ -31,14 +31,15 @@ then
 	else{
 		sendCommand(Security_Alarm, OFF)
 	}
+	if(My_Status.state == 4){
+		sendBroadcastNotification("Test, state update to 4.")
+	}
 end
 
 
 
 rule "My Default Update phone 2"
 when
-		Item Phone_HB changed to heartbeat
-	or
 		Item Phone_State changed from away to idle
 	or
 		Item Phone_State changed from charging to idle

@@ -3,7 +3,7 @@ Group GRP_PIONEER
 Switch	AV_Power	"AVR Power"				<receiver> 		{ channel="pioneeravr:ipAvr:vsx923IP:power" }
 Switch	AV_Mute		"AVR Mute"				<volume_mute>	{ channel="pioneeravr:ipAvr:vsx923IP:mute" }
 String	AV_Source	"AVR Source"			<receiver>		{ channel="pioneeravr:ipAvr:vsx923IP:setInputSource" }
-Dimmer	AV_Volume	"AVR Volume [%.1f]%"	<volume>		{ channel="pioneeravr:ipAvr:vsx923IP:volumeDimmer" }
+Dimmer	AV_Volume	"AVR Volume [%.1f]%"	<volume>		{ channel="pioneeravr:ipAvr:vsx923IP:volumeDimmer" } 
 
 
 //Kodi
@@ -13,7 +13,7 @@ String 	Kodi_Artist	"Kodi artist [%s]"	<video>		{ xbmc="<[#livingroom|Player.Art
 String 	Kodi_Type	"Kodi type [%s]"	<video>		{ xbmc="<[#livingroom|Player.Type]" }
 
 //FIXME
-Switch	Remote_Light		//{ rfxcom="<263429:Command" }
-Switch	Remote_Vol			//{ rfxcom="<266501:Command" }
-Switch	Remote_Kodi		 	//{ rfxcom="<267269:Command" }
-Switch	Remote_KodiNext		//{ rfxcom="<267521:Command" }
+Switch	Remote_Light		{ rfxcom="<263429:Command" }
+Switch	Remote_Vol			{ rfxcom="<266501:Command" }
+Switch	Remote_Kodi		 	{ rfxcom="<267269:Command" }
+Switch	Remote_KodiNext		{ rfxcom="<267521:Command" } 

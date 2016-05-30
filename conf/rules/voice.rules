@@ -1,0 +1,109 @@
+rule "VoiceCommand Received"
+when
+	Item VoiceCommand received command
+then
+	var String command = VoiceCommand.state.toString.toLowerCase
+	
+	//First find the new state:
+	var State newState = null
+	var Number hasNumber = 0
+	var Number hasState = 0
+	
+	if(command.contains("graden") || command.contains("procent") || command.contains("%")){
+		// extract new state (find the digits in the string)
+        val java.util.regex.Pattern p = java.util.regex.Pattern::compile(".* ([0-9]+).*")
+        var java.util.regex.Matcher m = p.matcher(command)
+        if (m.matches()) {
+            newState = new String(m.group(1).trim())
+            hasNumber = 1
+		}
+	}
+	else if(command.contains("uit")){
+		hasState = 1
+        newState = "OFF"
+    } 
+    else if(command.contains("aan")){
+		hasState = 1
+        newState = "ON"
+    }
+    else if (command.contains("verlagen")){
+		hasState = 1
+        newState = "DECREASE"
+    } 
+    else if(command.contains("verhogen")){
+		hasState = 1
+        newState = "INCREASE"
+	}
+	
+	//Find the right item
+	//First check for lighting, no support for fancy colors yet
+	if(command.contains("verlichting") || command.contains("lamp") || command.contains("licht") || command.contains("ligt")){
+		if(command.contains("slaapkamer") && hasNumber == 1){
+			sendCommand(Light_Slaapkamer, newState)
+		}
+		else if(command.contains("kamer") && hasNumber == 1){
+			sendCommand(Light_Kamer, newState)
+		}
+		else if(command.contains("lees") && hasNumber == 1){
+			sendCommand(Light_Read, newState)
+		}
+		else if(command.contains("computer") && hasState == 1){
+			sendCommand(Light_Computer, newState)
+		}
+		else if(command.contains("hal") && hasNumber == 1){
+			sendCommand(Light_Hal, newState)
+		}
+		else if(hasNumber == 1){
+			sendCommand(Light_Master, newState)
+		}
+	}
+	
+	//Media stuff (XBMC is doen independent already!
+	if(command.contains("versterker") || command.contains("pioneer")){
+		if((command.contains("mute") || command.contains("dempen")) && hasState == 1){
+			sendCommand(AV_Mute, newState)
+		}
+		else if(hasNumber == 1){
+			sendCommand(AV_Volume, newState)
+		}
+		else if(hasState == 1){
+			sendCommand(AV_Power, newState)
+		}
+	}
+	
+	if(command.contains("subwoofer") && hasState == 1){
+		sendCommand(Media_Subwoofer, newState)
+	}
+	
+	//Thermostaat
+	if((command.contains("verwarming") || command.contains("thermostaat") || command.contains("temperatuur")) && hasNumber == 1){
+		sendCommand(CV_Setpoint, newState)
+	}
+	
+	//TV
+	if(command.contains("tv") || (command.contains("televisie")){
+		sendCommand(TV_Power, ON)
+	}
+	
+	
+	//Media
+	if(command.contains("media") || command.contains("xbmc")){
+		if(command.contains("stop")){
+			executeCommandLine("python ../extern/kodi/kodiStop.py")
+		}
+		else if(command.contains("volgende")){
+			executeCommandLine("python ../extern/kodi/kodiNext.py")
+		}
+		else if(command.contains("vorige")){
+			executeCommandLine("python ../extern/kodi/kodiPrev.py")
+		}
+		else if(command.contains("spelen") || command.contains("afspelen") || command.contains("pauze")){
+			executeCommandLine("python ../extern/kodi/kodiPlayPause.py")
+		}
+	}
+end
+
+
+
+
+

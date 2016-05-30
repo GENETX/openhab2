@@ -1,7 +1,7 @@
 Group GRP_CLIMATE
 
-Number	Inside_Temperature	"Temperatuur binnen [%.1f °C]"		<temperature>	(GRP_CLIMATE)	//{ rfxcom="<19726:Temperature" }
-Number	Inside_Humidity		"Luchtvochtigheid binnen [%.1f %%]"	<humidity>		(GRP_CLIMATE)	 //{ rfxcom="<19726:Humidity" }
+Number	Inside_Temperature	"Temperatuur binnen [%.1f °C]"		<temperature>	(GRP_CLIMATE)	{ rfxcom="<19726:Temperature" }
+Number	Inside_Humidity		"Luchtvochtigheid binnen [%.1f %%]"	<humidity>		(GRP_CLIMATE)	{ rfxcom="<19726:Humidity" }
  
 Number	CV_Setpoint			"Setpoint Honeywell [%.1f °C]"		<temperature>	(GRP_CLIMATE)	
 Number	CV_Temperature		"Temperatuur Honeywell [%.1f °C]"	<temperature>	(GRP_CLIMATE)	

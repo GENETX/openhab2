@@ -15,8 +15,8 @@ Number	Weather_Clouds			"Bewolking [%.1f %%]"				<sun_clouds>	(GRP_WEATHER)		{ h
 Number 	Temperature_Delta			"Delta Temperatuur [%.1f °C]" 	<temperature>	(GRP_WEATHER)
 
 
-Number	Weather_StreetTemperature	"Temperatuur buiten  [%.1f °C]"		<temperature>	(GRP_WEATHER) 	//{ rfxcom="<21504:Temperature" }
-Number	Weather_StreetHumidity		"Luchtvochtigheid buiten [%.1f %%]"	<humidity>		(GRP_WEATHER)	//{ rfxcom="<21504:Humidity" }
+Number	Weather_StreetTemperature	"Temperatuur buiten  [%.1f °C]"		<temperature>	(GRP_WEATHER) 	{ rfxcom="<21504:Temperature" }
+Number	Weather_StreetHumidity		"Luchtvochtigheid buiten [%.1f %%]"	<humidity>		(GRP_WEATHER)	{ rfxcom="<21504:Humidity" }
 
 
 //Fix for the Basic UI bug on formatted strings

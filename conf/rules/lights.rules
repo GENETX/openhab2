@@ -9,7 +9,7 @@ then
 end
 
 
-//alarm
+//alarm  
 rule "Light wakeup"
 when
 	Time cron "10 * * * * ?" 
@@ -56,7 +56,7 @@ then
 	if(Config_Light.state == ON){
 		if(now.getHourOfDay > 12 && Light_Master.state == 0){
 			//Afernoon, turn lights on
-			if(Elevation.state < 6 && Weather_Clouds.state > 80){
+			if(Elevation.state < 6 && Elevation.previousState() >= 6 && Weather_Clouds.state > 80){
 				if(My_Scene.state != 3){
 					sendCommand(Light_Master, 80)
 				}
@@ -64,7 +64,7 @@ then
 					sendCommand(Light_Master, 40)
 				}
 			}
-			else if(Elevation.state < 3 && Weather_Clouds.state > 50){
+			else if(Elevation.state < 3 && Elevation.previousState() >= 3 && Weather_Clouds.state > 50){
 				if(My_Scene.state != 0){
 					sendCommand(Light_Master, 80)
 				}
@@ -72,7 +72,7 @@ then
 					sendCommand(Light_Master, 40)
 				}
 			}
-			else if(Elevation.state <= 0){
+			else if(Elevation.state <= 0 && Elevation.previousState() >= 0){
 				if(My_Scene.state != 3){
 					sendCommand(Light_Master, 80)
 				}
@@ -83,13 +83,13 @@ then
 		}
 		else if(Light_Master.state > 0){{
 			//Turn lights off
-			if(Elevation.state >= 0 && Weather_Clouds.state < 50){
+			if(Elevation.state >= 0 && Elevation.previousState() <= 0 && Weather_Clouds.state < 50){
 				sendCommand(Light_Master, 0)
 			}
-			else if(Elevation.state > 3 && Weather_Clouds.state < 80){
+			else if(Elevation.state > 3 && Elevation.previousState() <= 3 && Weather_Clouds.state < 80){
 				sendCommand(Light_Master, 0)
 			}
-			else if(Elevation.state > 6){
+			else if(Elevation.state > 6 && Elevation.previousState() <= 6 ){
 				sendCommand(Light_Master, 0)
 			}
 		}

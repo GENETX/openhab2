@@ -67,19 +67,45 @@ end
 //Chime
 rule "Media Deurbel"
 when
+	Item Doorbell_Sound received update
+then
+	sendCommand(Doorbell, ON)
+end
+
+rule "Media Deurbel"
+when
 	Item Doorbell received update
 then
-	if(Config_Media.state == ON){
-		//pause kodi
-		if(AV_Power.state == ON){
-			sendCommand(AV_Mute, ON)
+	if(Doorbell.state == ON){
+		sendBroadcastNotification("Er is iemand bij de deur.")
+		if(Config_Media.state == ON){
+			//pause kodi
+			if(AV_Power.state == ON){
+				sendCommand(AV_Mute, ON)
+			}
+			if(Kodi_Status.state == 'Play'){
+				kodiWasPlaying = 1
+				sendCommand(Kodi_Status, 'Pause')
+				executeCommandLine("python ../extern/kodi/kodiPlayPause.py")
+			}
 		}
-		if(Kodi_Status.state == 'Play'){
-			kodiWasPlaying = 1
-			sendCommand(Kodi_Status, 'Pause')
-			executeCommandLine("python ../extern/kodi/kodiPlayPause.py")
+		if(Config_Light.state == ON && Light_Master.state > 0){
+			sendCommand(Light_Hal, 80)
 		}
 	}
-	sendBroadcastNotification("Er is iemand bij de deur.")
+	else{
+		if(Config_Media.state == ON){
+			if(Kodi_Status.state == 'Pause' && kodiWasPlaying == 1){
+				sendCommand(Kodi_Status, 'Play')
+				executeCommandLine("python ../extern/kodi/kodiPlayPause.py")
+			}
+			if(AV_Power.state == ON){
+				sendCommand(AV_Mute, OFF)
+			}
+		}
+		if(Config_Light.state == ON){
+			sendCommand(Light_Hal, 0)
+		}
+	}
 end 
  

@@ -1,4 +1,4 @@
 Group GRP_SECURITY
 
 Switch Security_Alarm 			"Alarm" 			<shield> 	(GRP_SECURITY)
-String Security_SmokeDetector 	"Rookalarm [%s]" 	<fire>		(GRP_SECURITY)		//{ rfxcom="<2149888:Status" }
+String Security_SmokeDetector 	"Rookalarm [%s]" 	<fire>		(GRP_SECURITY)		{ rfxcom="<2149888:Status" }
